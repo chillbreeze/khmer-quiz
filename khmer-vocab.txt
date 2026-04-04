@@ -1,0 +1,101 @@
+#separator:tab
+#html:true
+I/me	khnyom/nhom (more common/spoken)
+You	nec
+He/Him	"go-a""t"" - slight t at end <br>(younger/older 'respect')"
+She/Her	"knee-yang/neang (same age or younger)<br>go-a""t"" - slight t at end (older/respect) *easy"
+It (animal/thing)	v-yeah
+We/Us	"yeung (2 - 3 people)<br>bpou""k"" yeung (big group)"
+They	"bpou""k"" gay (younger group)<br>bpou""k"" go-a""t"" (older group or respect ) *easy"
+Groups of people	Bpouk
+We (They + I)	bpouk khyom
+You guys	Bpouk + nec
+Older *also for family	Bong (Srey/Proh)
+Female	Srey
+Male	Proh
+Younger <br>*also for family	P'a-own, oun (Srey/c)
+Uncle <br>(20 years old &amp; up)	Bpou (bpoo)
+Aunty <br>(20 years old &amp; up)	Ming
+Big Aunty/Uncle	OM (Female &amp; Male) Srey/Proh
+Grandmother	Yayeigh
+Grandfather	Dtaahh
+Hello (formal)	Jom-reap-sour
+Hello (informal)	Sour-sdey
+Bye Bye (formal)	Jom-reap-Lear
+Bye Bye (informal)	Lear-Howie
+Sorry/Excuse me	Som-dtos
+Thank you	Orkun
+Thank you very much	Orkun chran
+How are you?	Dta nek sok-sab-bay-dte?
+I am fine, I am good, I am well.	Ja/bat Khyom sok-sab-bay
+Nice to see you	Rik-reay del ban skol nek
+Nice to meet you	Rik-reay del ban joub nek
+Have a good day = good luck (better)	sam nang la'or
+Good	la-ór
+Good (quality)	L'or
+Good/yummy/tasty/delious (food,drinks)	chh'nganh
+very/so	nah&nbsp;&nbsp;&nbsp;&nbsp; **** dont overdo it****
+Name	chhmoh
+what	eh?
+How about you?	jo nec/bong?
+Which country are you from?	Bong... mok pee protes na?
+Which province are you from?	Bong... mok pee khette na?
+I come from America	Khymom mok pee protes Americ
+How old are you?	Bong... Ayu + pun-man?
+I'm 46 years old	Khynom mean/ayu (sae sap bram moi) chnam
+Really?	men te?
+No	te
+It's okay/your welcome	Min ey dte - Ort ey dte - Dowie khdey rik reay
+See you tomorrow	Joup khear thngai sa-ek
+Where are you going	Bong... dtaw na?
+I go to (place)	Khnyom dtaw (place)
+What do you buy/eat?	Bong... dtinh/nham ey?
+Where is (place)	(Place) nov + na?
+I buy ...	Kynom dtinh ...
+(Thing)... How much?	(Thing)... thlai pun man
+It is expensive	v-yeah thlai
+It is not expensive	Ort thlai dte
+Have you eaten yet?	nham bai (breakfast/lunch/dinner) nov?
+I ate already	Khnyom (breakfast/lunch/dinner) nham howie
+not yet	Nov dte
+Stop	Chhob
+here	nov dtee ni
+there	nov dtee nus
+bot	turn
+sdam	right
+chweng	left
+go	dtau
+straight	trong
+step back	toy krowie
+Let's go/eat/work	To(s) dtau/nham
+bicycle	kgong
+book	seeyou-poe
+bread	nom'bpaing
+car	lan
+clothes (pants + shirt)	cow awoo
+company	krom-hun
+friend	mut peck
+hotel	son'tha'gear
+house/home	peuteh
+motor	moto
+pants/trousers	cow
+pen	bic
+phone	dtoo-ra-saab
+school	sa-la rean
+shirt	awoo
+t-shirt	awoo-yoot
+and	nung
+at/in	nov/naw
+cook	tver-ma-hop
+do/make	tver
+drive	bauk-lan
+eat/drink	nham
+have/has/there are/there is	me-in
+like	jol'jet
+live	rou(s)nov
+need	trov-gar
+sell	louk
+stay (stay outside 1 night +)	snak'nov
+to transport (take/ride)	ji'
+with	jear-moi
+work	tver-gar

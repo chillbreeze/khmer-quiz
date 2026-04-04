@@ -1,0 +1,262 @@
+/* ── State ─────────────────────────────────────────────────────── */
+const QUIZ_LENGTH = 20;
+
+let state = {
+  direction: 'random',
+  mode:      'choice',
+  correct:   0,
+  total:     0,
+  streak:    0,
+  currentAnswer: null,
+  currentVocabId: null,
+  currentDirection: null,
+  answered: false,
+};
+
+/* ── DOM refs ──────────────────────────────────────────────────── */
+const $ = id => document.getElementById(id);
+const prompt       = $('prompt');
+const cardDir      = $('cardDir');
+const choicesWrap  = $('choicesWrap');
+const typeWrap     = $('typeWrap');
+const typeInput    = $('typeInput');
+const btnSubmit    = $('btnSubmit');
+const feedback     = $('feedback');
+const btnNext      = $('btnNext');
+const scoreCorrect = $('scoreCorrect');
+const scoreTotal   = $('scoreTotal');
+const streakEl     = $('streak');
+
+/* ── Toggle controls ───────────────────────────────────────────── */
+document.querySelectorAll('#dirToggle .tog').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#dirToggle .tog').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.direction = btn.dataset.val;
+    loadQuestion();
+  });
+});
+
+document.querySelectorAll('#modeToggle .tog').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#modeToggle .tog').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.mode = btn.dataset.val;
+    loadQuestion();
+  });
+});
+
+/* ── Start / restart quiz ──────────────────────────────────────── */
+function startQuiz() {
+  state.correct = 0;
+  state.total   = 0;
+  state.streak  = 0;
+  state.answered = false;
+  scoreCorrect.textContent = 0;
+  scoreTotal.textContent   = `0/${QUIZ_LENGTH}`;
+  streakEl.textContent     = '';
+  $('results').classList.add('hidden');
+  $('card').classList.remove('hidden');
+  loadQuestion();
+}
+
+/* ── Load question ─────────────────────────────────────────────── */
+async function loadQuestion() {
+  state.answered = false;
+  resetUI();
+  prompt.textContent = '…';
+
+  try {
+    const res  = await fetch(`/api/question?mode=${state.mode}&direction=${state.direction}`);
+    const data = await res.json();
+    if (data.error) { prompt.textContent = data.error; return; }
+
+    state.currentVocabId   = data.id;
+    state.currentDirection = data.direction;
+
+    cardDir.textContent = data.direction === 'en_to_km'
+      ? 'English → KH phonetic'
+      : 'KH phonetic → English';
+
+    prompt.textContent = data.prompt;
+    prompt.className   = 'prompt';
+
+    if (state.mode === 'choice') {
+      renderChoices(data.choices);
+    } else {
+      state.currentAnswer = data.answer;
+      typeWrap.classList.remove('hidden');
+      typeInput.value = '';
+      typeInput.className = '';
+      typeInput.focus();
+    }
+  } catch (e) {
+    prompt.textContent = 'Error loading question.';
+    console.error(e);
+  }
+}
+
+/* ── Render choices ────────────────────────────────────────────── */
+function renderChoices(choices) {
+  choicesWrap.innerHTML = '';
+  choicesWrap.classList.remove('hidden');
+  choices.forEach(text => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.textContent = text;
+    btn.addEventListener('click', () => handleChoice(btn, text));
+    choicesWrap.appendChild(btn);
+  });
+}
+
+/* ── After answering: check if quiz is done ────────────────────── */
+function afterAnswer() {
+  btnNext.classList.remove('hidden');
+  if (state.total >= QUIZ_LENGTH) {
+    btnNext.textContent = 'See Results →';
+  } else {
+    btnNext.textContent = 'Next →';
+  }
+}
+
+/* ── Handle choice click ───────────────────────────────────────── */
+async function handleChoice(clickedBtn, chosen) {
+  if (state.answered) return;
+  state.answered = true;
+
+  const res  = await fetch('/api/check', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify({ chosen }),
+  });
+  const data = await res.json();
+
+  document.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+
+  if (data.correct) {
+    clickedBtn.classList.add('correct');
+    showFeedback(true);
+    bumpScore(true);
+  } else {
+    clickedBtn.classList.add('wrong');
+    document.querySelectorAll('.choice-btn').forEach(b => {
+      if (b.textContent === data.answer) b.classList.add('correct');
+    });
+    showFeedback(false, data.answer);
+    bumpScore(false);
+  }
+
+  afterAnswer();
+}
+
+/* ── Handle typed answer ───────────────────────────────────────── */
+async function handleTyped() {
+  if (state.answered || !state.currentAnswer) return;
+  const typed = typeInput.value.trim();
+  if (!typed) return;
+  state.answered = true;
+
+  const res  = await fetch('/api/check_typed', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify({
+      typed,
+      answer:    state.currentAnswer,
+      vocab_id:  state.currentVocabId,
+      direction: state.currentDirection,
+    }),
+  });
+  const data = await res.json();
+
+  if (data.correct) {
+    typeInput.classList.add('correct');
+    showFeedback(true);
+    bumpScore(true);
+  } else {
+    typeInput.classList.add('wrong');
+    $('card').classList.add('shake');
+    setTimeout(() => $('card').classList.remove('shake'), 400);
+    showFeedback(false, data.answer);
+    bumpScore(false);
+  }
+
+  afterAnswer();
+}
+
+btnSubmit.addEventListener('click', handleTyped);
+typeInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleTyped(); });
+
+/* ── Next button ───────────────────────────────────────────────── */
+btnNext.addEventListener('click', () => {
+  if (state.total >= QUIZ_LENGTH) {
+    showResults();
+  } else {
+    loadQuestion();
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === ' ' && state.answered) {
+    e.preventDefault();
+    if (state.total >= QUIZ_LENGTH) showResults();
+    else loadQuestion();
+  }
+});
+
+/* ── Score & streak ────────────────────────────────────────────── */
+function bumpScore(correct) {
+  state.total++;
+  if (correct) {
+    state.correct++;
+    state.streak++;
+  } else {
+    state.streak = 0;
+  }
+  scoreCorrect.textContent = state.correct;
+  scoreTotal.textContent   = `${state.total}/${QUIZ_LENGTH}`;
+  streakEl.textContent     = state.streak >= 3 ? `🔥 ${state.streak}` : '';
+}
+
+/* ── Feedback ──────────────────────────────────────────────────── */
+function showFeedback(correct, correctAnswer) {
+  feedback.classList.remove('hidden', 'correct-fb', 'wrong-fb');
+  if (correct) {
+    feedback.textContent = '✓ Correct!';
+    feedback.classList.add('correct-fb');
+  } else {
+    feedback.textContent = `✗ Answer: ${correctAnswer}`;
+    feedback.classList.add('wrong-fb');
+  }
+}
+
+/* ── Results screen ────────────────────────────────────────────── */
+function showResults() {
+  $('card').classList.add('hidden');
+  const pct = Math.round((state.correct / QUIZ_LENGTH) * 100);
+  let message;
+  if (pct === 100) message = 'Perfect score!';
+  else if (pct >= 80) message = 'Great work!';
+  else if (pct >= 60) message = 'Good effort!';
+  else message = 'Keep practising!';
+
+  $('results-score').textContent = `${state.correct} / ${QUIZ_LENGTH}`;
+  $('results-pct').textContent   = `${pct}%`;
+  $('results-msg').textContent   = message;
+  $('results').classList.remove('hidden');
+}
+
+$('btnRestart').addEventListener('click', startQuiz);
+
+/* ── Reset UI ──────────────────────────────────────────────────── */
+function resetUI() {
+  choicesWrap.innerHTML = '';
+  choicesWrap.classList.add('hidden');
+  typeWrap.classList.add('hidden');
+  feedback.classList.add('hidden');
+  btnNext.classList.add('hidden');
+  btnNext.textContent = 'Next →';
+  typeInput.className = '';
+}
+
+/* ── Init ──────────────────────────────────────────────────────── */
+startQuiz();

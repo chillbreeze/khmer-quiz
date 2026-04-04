@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin · Khmer Quiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="stylesheet" href="/static/css/admin.css" />
+</head>
+<body class="admin-body">
+  <div class="bg-texture"></div>
+
+  <header>
+    <div class="logo">
+      <a href="/" class="logo-back">← Back</a>
+      <span class="logo-en">ADMIN</span>
+    </div>
+  </header>
+
+  <main class="admin-main">
+    <div class="admin-add">
+      <h2>Add Word</h2>
+      <div class="admin-form">
+        <input type="text" id="newEnglish" placeholder="English / Phrase" />
+        <input type="text" id="newKhmer" placeholder="Khmer (phonetic)" />
+        <input type="text" id="newNotes" placeholder="Notes (optional)" />
+        <input type="text" id="newCategory" placeholder="Category (default: general)" />
+        <button id="btnAdd">Add</button>
+      </div>
+    </div>
+
+    <div class="admin-list-wrap">
+      <div class="admin-list-header">
+        <h2>Vocab List <span id="vocabCount"></span></h2>
+        <input type="text" id="filterInput" placeholder="Filter…" />
+      </div>
+      <table id="vocabTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>English</th>
+            <th>Khmer</th>
+            <th>Notes</th>
+            <th>Category</th>
+            <th>Active</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="vocabBody"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <script src="/static/js/admin.js"></script>
+</body>
+</html>
