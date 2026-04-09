@@ -46,7 +46,7 @@ I use Anki and this works, but I fetl that I need another method to help me lear
 
 ```
 ├── app/
-│   ├── app.py              # Flask app — all routes
+│   ├── app.py              # Flask app - all routes
 │   ├── Dockerfile
 │   ├── requirements.txt
 │   ├── static/
@@ -74,7 +74,7 @@ I use Anki and this works, but I fetl that I need another method to help me lear
 
 ## Notes
 
-- No authentication on the admin panel — this runs on a private home server behind a firewall, so it's not a concern for me.
+- No authentication on the admin panel. This runs on a private home server behind a firewall, so it's not a concern for me.
 - The `users` table in the schema is a stub for future multi-user support that I haven't needed yet.
 - Multiple choice answer validation happens server-side (answer stored in Flask session); typed answer validation is client-side since it's a personal tool and there's nothing to gain from hiding it.
 

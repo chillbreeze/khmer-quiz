@@ -3,11 +3,9 @@ const QUIZ_LENGTH = 20;
 
 let state = {
   direction: 'random',
-  mode:      'choice',
   correct:   0,
   total:     0,
   streak:    0,
-  currentAnswer: null,
   currentVocabId: null,
   currentDirection: null,
   answered: false,
@@ -18,9 +16,6 @@ const $ = id => document.getElementById(id);
 const prompt       = $('prompt');
 const cardDir      = $('cardDir');
 const choicesWrap  = $('choicesWrap');
-const typeWrap     = $('typeWrap');
-const typeInput    = $('typeInput');
-const btnSubmit    = $('btnSubmit');
 const feedback     = $('feedback');
 const btnNext      = $('btnNext');
 const scoreCorrect = $('scoreCorrect');
@@ -33,15 +28,6 @@ document.querySelectorAll('#dirToggle .tog').forEach(btn => {
     document.querySelectorAll('#dirToggle .tog').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     state.direction = btn.dataset.val;
-    loadQuestion();
-  });
-});
-
-document.querySelectorAll('#modeToggle .tog').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('#modeToggle .tog').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    state.mode = btn.dataset.val;
     loadQuestion();
   });
 });
@@ -67,7 +53,7 @@ async function loadQuestion() {
   prompt.textContent = '…';
 
   try {
-    const res  = await fetch(`/api/question?mode=${state.mode}&direction=${state.direction}`);
+    const res  = await fetch(`/api/question?mode=choice&direction=${state.direction}`);
     const data = await res.json();
     if (data.error) { prompt.textContent = data.error; return; }
 
@@ -81,15 +67,7 @@ async function loadQuestion() {
     prompt.textContent = data.prompt;
     prompt.className   = 'prompt';
 
-    if (state.mode === 'choice') {
-      renderChoices(data.choices);
-    } else {
-      state.currentAnswer = data.answer;
-      typeWrap.classList.remove('hidden');
-      typeInput.value = '';
-      typeInput.className = '';
-      typeInput.focus();
-    }
+    renderChoices(data.choices);
   } catch (e) {
     prompt.textContent = 'Error loading question.';
     console.error(e);
@@ -149,42 +127,6 @@ async function handleChoice(clickedBtn, chosen) {
   afterAnswer();
 }
 
-/* ── Handle typed answer ───────────────────────────────────────── */
-async function handleTyped() {
-  if (state.answered || !state.currentAnswer) return;
-  const typed = typeInput.value.trim();
-  if (!typed) return;
-  state.answered = true;
-
-  const res  = await fetch('/api/check_typed', {
-    method:  'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body:    JSON.stringify({
-      typed,
-      answer:    state.currentAnswer,
-      vocab_id:  state.currentVocabId,
-      direction: state.currentDirection,
-    }),
-  });
-  const data = await res.json();
-
-  if (data.correct) {
-    typeInput.classList.add('correct');
-    showFeedback(true);
-    bumpScore(true);
-  } else {
-    typeInput.classList.add('wrong');
-    $('card').classList.add('shake');
-    setTimeout(() => $('card').classList.remove('shake'), 400);
-    showFeedback(false, data.answer);
-    bumpScore(false);
-  }
-
-  afterAnswer();
-}
-
-btnSubmit.addEventListener('click', handleTyped);
-typeInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleTyped(); });
 
 /* ── Next button ───────────────────────────────────────────────── */
 btnNext.addEventListener('click', () => {
@@ -251,11 +193,9 @@ $('btnRestart').addEventListener('click', startQuiz);
 function resetUI() {
   choicesWrap.innerHTML = '';
   choicesWrap.classList.add('hidden');
-  typeWrap.classList.add('hidden');
   feedback.classList.add('hidden');
   btnNext.classList.add('hidden');
   btnNext.textContent = 'Next →';
-  typeInput.className = '';
 }
 
 /* ── Init ──────────────────────────────────────────────────────── */

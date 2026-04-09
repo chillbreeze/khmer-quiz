@@ -1,12 +1,26 @@
 import os
 import random
+import secrets
 import psycopg2
 import psycopg2.extras
-from flask import Flask, jsonify, render_template, request, session
+from flask import Flask, jsonify, redirect, render_template, request, session, url_for
+from functools import wraps
 import uuid
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-change-me")
+
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "")
+ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME", "")
+
+
+def login_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if not session.get("admin_logged_in"):
+            return redirect(url_for("login", next=request.path))
+        return f(*args, **kwargs)
+    return decorated
 
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
@@ -134,9 +148,33 @@ def check_typed():
     return jsonify({"correct": is_correct, "answer": correct})
 
 
-# ── Admin routes (no auth yet — add later) ────────────────────────────────────
+# ── Auth routes ───────────────────────────────────────────────────────────────
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        username = request.form.get("username", "")
+        password = request.form.get("password", "")
+        username_ok = ADMIN_USERNAME and secrets.compare_digest(username, ADMIN_USERNAME)
+        password_ok = ADMIN_PASSWORD and secrets.compare_digest(password, ADMIN_PASSWORD)
+        if username_ok and password_ok:
+            session["admin_logged_in"] = True
+            next_url = request.args.get("next") or url_for("admin")
+            return redirect(next_url)
+        return render_template("login.html", error="Incorrect username or password.")
+    return render_template("login.html", error=None)
+
+
+@app.route("/logout")
+def logout():
+    session.pop("admin_logged_in", None)
+    return redirect(url_for("index"))
+
+
+# ── Admin routes ──────────────────────────────────────────────────────────────
 
 @app.route("/admin")
+@login_required
 def admin():
     return render_template("admin.html")
 
@@ -154,6 +192,7 @@ def vocab_list():
 
 
 @app.route("/api/vocab", methods=["POST"])
+@login_required
 def vocab_add():
     data = request.get_json()
     conn = get_db()
@@ -168,6 +207,7 @@ def vocab_add():
 
 
 @app.route("/api/vocab/<int:vocab_id>", methods=["PUT"])
+@login_required
 def vocab_update(vocab_id):
     data = request.get_json()
     conn = get_db()
@@ -181,6 +221,7 @@ def vocab_update(vocab_id):
 
 
 @app.route("/api/vocab/<int:vocab_id>", methods=["DELETE"])
+@login_required
 def vocab_delete(vocab_id):
     conn = get_db()
     cur  = conn.cursor()

@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git -c init.defaultBranch=main branch -m main)",
+      "Bash(gh auth:*)",
+      "Bash(git config:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" -H \"Authorization: token $\\(git config --global github.token || echo ''\\)\" https://api.github.com/user)",
+      "Read(//home/terry/**)",
+      "Read(//home/terry/.config/gh/**)",
+      "Read(//home/terry/.ssh/**)"
+    ]
+  }
+}
