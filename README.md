@@ -4,7 +4,7 @@ A personal web app I built to help me study Khmer (Cambodian) vocabulary.
 
 **Live:** [learn.khmer.cloud](https://learn.khmer.cloud)
 
-![Website screenshot](screenshots/khmer-quiz-screenshot.png)
+![Website screenshot](screenshots/khmer-website-screenshot-00.png)
 
 ## Why I Built It
 
@@ -14,7 +14,6 @@ I use Anki and this works, but I fetl that I need another method to help me lear
 
 **Quiz interface**
 - 20-question rounds with a score and streak counter.
-- Two answer modes: multiple choice (4 options) or typed input.
 - Three direction modes: English → Khmer, Khmer → English, or random mix.
 - Spacebar advances to the next question.
 - Results screen at the end of each round.
@@ -71,11 +70,11 @@ I use Anki and this works, but I fetl that I need another method to help me lear
 - **Khmer script alongside phonetics:** Currently the quiz uses phonetic romanization only. I plan to display the actual Khmer script (e.g. ស្វាគមន៍) alongside so learners can connect the two.
 - **Improved phonetics and definitions:** Clean up the existing entries to be more consistent and readable, especially for the typed input mode.
 - **Category-based quizzes:** Let users choose a category to focus on (nouns, verbs, greetings, numbers, etc.) rather than always pulling from the full word list.
+- **Timed Levels:** Levels let users define how many questions they want and how long the timer will be before it advances to the next question. Higher levels will have timer pre-defined. 
 
 ## Notes
 
-- No authentication on the admin panel. This runs on a private home server behind a firewall, so it's not a concern for me.
 - The `users` table in the schema is a stub for future multi-user support that I haven't needed yet.
-- Multiple choice answer validation happens server-side (answer stored in Flask session); typed answer validation is client-side since it's a personal tool and there's nothing to gain from hiding it.
+- Multiple choice answer validation happens server-side (answer stored in Flask session)
 
 ---
