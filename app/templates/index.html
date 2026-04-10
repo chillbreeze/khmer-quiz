@@ -1,68 +1,80 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ខ្មែរ · Khmer Quiz</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Khmer:wght@300;400;600&family=Space+Mono:wght@400;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/css/style.css" />
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ខ្មែរ · Khmer Quiz</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Serif+Khmer:wght@300;400;600&family=Space+Mono:wght@400;700&family=Instrument+Serif:ital@0;1&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="/static/css/style.css" />
+    </head>
+    <body>
+        <div class="bg-texture"></div>
 
-  <div class="bg-texture"></div>
+        <header>
+            <div class="logo">
+                <span class="logo-km">ខ្មែរ</span>
+                <span class="logo-en">QUIZ</span>
+            </div>
+            <div class="controls-top">
+                <div class="toggle-group" id="dirToggle">
+                    <button class="tog active" data-val="random">Mixed</button>
+                    <button class="tog" data-val="en_to_km">EN → KH</button>
+                    <button class="tog" data-val="km_to_en">KH → EN</button>
+                </div>
+            </div>
+        </header>
 
-  <header>
-    <div class="logo">
-      <span class="logo-km">ខ្មែរ</span>
-      <span class="logo-en">QUIZ</span>
-    </div>
-    <div class="controls-top">
-      <div class="toggle-group" id="dirToggle">
-        <button class="tog active" data-val="random">Mixed</button>
-        <button class="tog" data-val="en_to_km">EN → KH</button>
-        <button class="tog" data-val="km_to_en">KH → EN</button>
-      </div>
-    </div>
-  </header>
+        <main>
+            <div class="score-bar">
+                <span id="scoreTotal">0/20</span>
+                <span class="score-sep">·</span>
+                <span id="scoreCorrect">0</span>
+                <span class="score-label">correct</span>
+                <div class="streak" id="streak"></div>
+            </div>
 
-  <main>
-    <div class="score-bar">
-      <span id="scoreTotal">0/20</span>
-      <span class="score-sep">·</span>
-      <span id="scoreCorrect">0</span>
-      <span class="score-label">correct</span>
-      <div class="streak" id="streak"></div>
-    </div>
+            <div class="card" id="card">
+                <div class="card-dir-label" id="cardDir"></div>
+                <div class="prompt" id="prompt">Loading…</div>
 
-    <div class="card" id="card">
-      <div class="card-dir-label" id="cardDir"></div>
-      <div class="prompt" id="prompt">Loading…</div>
+                <!-- Multiple choice mode -->
+                <div class="choices" id="choicesWrap"></div>
 
-      <!-- Multiple choice mode -->
-      <div class="choices" id="choicesWrap"></div>
+                <div class="feedback hidden" id="feedback"></div>
+                <button class="btn-next hidden" id="btnNext">Next →</button>
+            </div>
+        </main>
 
-<div class="feedback hidden" id="feedback"></div>
-      <button class="btn-next hidden" id="btnNext">Next →</button>
-    </div>
-  </main>
+        <div class="results hidden" id="results">
+            <div class="results-score" id="results-score"></div>
+            <div class="results-pct" id="results-pct"></div>
+            <div class="results-msg" id="results-msg"></div>
+            <button class="btn-restart" id="btnRestart">Play Again</button>
+        </div>
 
-  <div class="results hidden" id="results">
-    <div class="results-score" id="results-score"></div>
-    <div class="results-pct" id="results-pct"></div>
-    <div class="results-msg" id="results-msg"></div>
-    <button class="btn-restart" id="btnRestart">Play Again</button>
-  </div>
+        <footer>
+            <span>BUILT WITH SMOOTH LOGIC</span>
+            <span class="footer-sep">|</span>
+            <a href="https://t.me/ProjectTerry" target="_blank" rel="noopener">
+                <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    style="vertical-align: middle"
+                >
+                    <path
+                        d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 14.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.828.942z"
+                    /></svg
+                >MESSAGE ME
+            </a>
+        </footer>
 
-  <footer>
-    <span>BUILT BY TERRY</span>
-    <span class="footer-sep">|</span>
-    <a href="https://t.me/ProjectTerry" target="_blank" rel="noopener">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle;"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 14.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.828.942z"/></svg>MESSAGE ME
-    </a>
-  </footer>
-
-  <script src="/static/js/quiz.js"></script>
-</body>
+        <script src="/static/js/quiz.js"></script>
+    </body>
 </html>
