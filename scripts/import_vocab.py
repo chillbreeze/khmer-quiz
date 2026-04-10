@@ -1,54 +1,50 @@
 #!/usr/bin/env python3
 """
-Import Anki tab-separated export into the khmer_quiz PostgreSQL database.
+Import vocabulary from a published Google Sheets CSV into the khmer_quiz PostgreSQL database.
+
+Column A = English, Column B = Khmer phonetic.
 
 Usage:
-  python3 import_vocab.py path/to/Khmer_-_Palynath.txt
+  python3 import_vocab.py
 
-Run this from the host, pointing at the DB through the exposed port,
-OR exec into the app container and run it there.
+Run inside the app container:
+  docker exec khmer_quiz_app python3 /import_vocab.py
 
 The script is idempotent: it skips duplicates (matched on english+khmer).
 """
 
-import sys
-import re
-import html
+import csv
+import io
+import os
+import urllib.request
+
 import psycopg2
 
-# ── Config ─────────────────────────────────────────────────────────────────────
-# If running from host with port 5432 exposed, use localhost.
-# If running inside the app container, use 'db'.
-import os
+SHEETS_CSV_URL = (
+    "https://docs.google.com/spreadsheets/d/e/"
+    "2PACX-1vSFeHAKYQgMzzcSKJue8Zzc3A1R_pw6uc9ewiTcWY_jRNbpFUWpHrhwCQdkWZLiaTar8naN9SsPd4v6"
+    "/pub?gid=0&single=true&output=csv"
+)
+
 DATABASE_URL = os.environ.get("DATABASE_URL")
 if not DATABASE_URL:
     raise RuntimeError("DATABASE_URL environment variable is required")
 
-def strip_html(text: str) -> str:
-    """Remove HTML tags and decode HTML entities."""
-    text = re.sub(r'<br\s*/?>', ' / ', text, flags=re.IGNORECASE)
-    text = re.sub(r'<[^>]+>', '', text)
-    text = html.unescape(text)
-    text = re.sub(r'\s+', ' ', text).strip()
-    return text
 
+def fetch_words():
+    with urllib.request.urlopen(SHEETS_CSV_URL) as response:
+        content = response.read().decode("utf-8")
 
-def parse_file(path: str):
-    """Parse Anki txt export. Returns list of (english, khmer) tuples."""
     words = []
-    with open(path, encoding='utf-8') as f:
-        for line in f:
-            line = line.rstrip('\n')
-            # Skip comment / metadata lines
-            if line.startswith('#') or not line.strip():
-                continue
-            parts = line.split('\t')
-            if len(parts) < 2:
-                continue
-            english = strip_html(parts[0])
-            khmer   = strip_html(parts[1])
-            if english and khmer:
-                words.append((english, khmer))
+    reader = csv.reader(io.StringIO(content))
+    next(reader, None)  # skip header row
+    for row in reader:
+        if len(row) < 2:
+            continue
+        english = row[0].strip()
+        khmer   = row[1].strip()
+        if english and khmer:
+            words.append((english, khmer))
     return words
 
 
@@ -58,7 +54,6 @@ def import_words(words):
     added   = 0
     skipped = 0
     for english, khmer in words:
-        # Check for duplicate
         cur.execute(
             "SELECT id FROM vocab WHERE LOWER(english)=%s AND LOWER(khmer)=%s",
             (english.lower(), khmer.lower())
@@ -68,7 +63,7 @@ def import_words(words):
             continue
         cur.execute(
             "INSERT INTO vocab (english, khmer, category) VALUES (%s, %s, %s)",
-            (english, khmer, 'general')
+            (english, khmer, "general")
         )
         added += 1
     conn.commit()
@@ -77,12 +72,9 @@ def import_words(words):
 
 
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: python3 import_vocab.py <path-to-anki.txt>")
-        sys.exit(1)
-    path  = sys.argv[1]
-    words = parse_file(path)
-    print(f"Parsed {len(words)} words from {path}")
+    print(f"Fetching vocab from Google Sheets…")
+    words = fetch_words()
+    print(f"Parsed {len(words)} words")
     added, skipped = import_words(words)
     print(f"✓ Added: {added}  |  Skipped (duplicate): {skipped}")
 
