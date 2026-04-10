@@ -322,21 +322,34 @@ main {
 
 /* ── Footer ────────────────────────────────────────────────────── */
 footer {
-  padding: 1rem 2rem;
+  padding: 1.25rem 2rem;
   text-align: center;
   position: relative;
   z-index: 1;
-}
-
-footer a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
   font-size: 0.65rem;
   letter-spacing: 0.15em;
-  color: var(--border);
-  text-decoration: none;
-  transition: color 0.2s;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  margin-top: auto;
 }
 
-footer a:hover { color: var(--muted); }
+.footer-sep { color: var(--border); }
+
+footer a {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+footer a:hover { color: var(--accent); }
 
 /* ── Results screen ────────────────────────────────────────────── */
 .results {
