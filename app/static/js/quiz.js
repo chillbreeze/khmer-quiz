@@ -78,10 +78,11 @@ async function loadQuestion() {
 function renderChoices(choices) {
   choicesWrap.innerHTML = '';
   choicesWrap.classList.remove('hidden');
-  choices.forEach(text => {
+  choices.forEach((text, i) => {
     const btn = document.createElement('button');
     btn.className = 'choice-btn';
-    btn.textContent = text;
+    btn.dataset.answer = text;
+    btn.innerHTML = `<span class="choice-num">${i + 1}</span>${text}`;
     btn.addEventListener('click', () => handleChoice(btn, text));
     choicesWrap.appendChild(btn);
   });
@@ -118,7 +119,7 @@ async function handleChoice(clickedBtn, chosen) {
   } else {
     clickedBtn.classList.add('wrong');
     document.querySelectorAll('.choice-btn').forEach(b => {
-      if (b.textContent === data.answer) b.classList.add('correct');
+      if (b.dataset.answer === data.answer) b.classList.add('correct');
     });
     showFeedback(false, data.answer);
     bumpScore(false);
@@ -138,10 +139,14 @@ btnNext.addEventListener('click', () => {
 });
 
 document.addEventListener('keydown', e => {
-  if (e.key === ' ' && state.answered) {
+  if ((e.key === ' ' || e.key === 'Enter') && state.answered) {
     e.preventDefault();
     if (state.total >= QUIZ_LENGTH) showResults();
     else loadQuestion();
+  }
+  if (['1','2','3','4'].includes(e.key) && !state.answered) {
+    const btn = choicesWrap.querySelectorAll('.choice-btn')[parseInt(e.key) - 1];
+    if (btn) btn.click();
   }
 });
 

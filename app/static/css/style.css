@@ -225,6 +225,20 @@ main {
 
 .choice-btn:disabled { cursor: default; }
 
+.choice-num {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  background: rgba(255,255,255,0.06);
+  border-radius: 4px;
+  padding: 0.1rem 0.35rem;
+  margin-right: 0.55rem;
+  vertical-align: middle;
+  line-height: 1.6;
+}
+
 /* ── Type mode ─────────────────────────────────────────────────── */
 .type-wrap {
   display: flex;
