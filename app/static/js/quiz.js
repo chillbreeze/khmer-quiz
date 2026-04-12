@@ -174,6 +174,7 @@ function showFeedback(correct, correctAnswer) {
     feedback.textContent = `✗ Answer: ${correctAnswer}`;
     feedback.classList.add('wrong-fb');
   }
+  feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 /* ── Results screen ────────────────────────────────────────────── */
@@ -204,4 +205,21 @@ function resetUI() {
 }
 
 /* ── Init ──────────────────────────────────────────────────────── */
-startQuiz();
+function showLanding() {
+  document.getElementById('landing').classList.remove('hidden');
+  document.querySelector('header').classList.add('hidden');
+  document.querySelector('main').classList.add('hidden');
+  $('results').classList.add('hidden');
+}
+
+document.getElementById('logoHome').addEventListener('click', showLanding);
+
+document.getElementById('btnStart').addEventListener('click', () => {
+  document.getElementById('landing').classList.add('hidden');
+  document.querySelector('header').classList.remove('hidden');
+  document.querySelector('main').classList.remove('hidden');
+  startQuiz();
+});
+
+// Reset to landing on every page load, including bfcache restores
+window.addEventListener('pageshow', showLanding);
