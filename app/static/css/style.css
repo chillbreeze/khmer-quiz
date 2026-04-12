@@ -11,7 +11,7 @@
     --wrong: #e05c5c;
     --radius: 12px;
     --font-mono: "Space Mono", monospace;
-    --font-serif: "Instrument Serif", serif;
+    --font-sans: "DM Sans", sans-serif;
     --font-khmer: "Noto Serif Khmer", serif;
 }
 
@@ -74,18 +74,40 @@
 }
 
 .landing-desc {
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: 0.85rem;
     color: var(--muted);
     line-height: 1.8;
     letter-spacing: 0.03em;
+    text-align: left;
+    width: 100%;
+}
+
+.landing-features {
+    list-style: none;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 0;
+}
+
+.landing-features li {
+    padding-left: 1.2rem;
+    text-indent: -1.2rem;
+}
+
+.landing-features li::before {
+    content: '— ';
+    color: var(--accent);
 }
 
 .landing-sub {
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: 0.7rem;
     color: #888;
     letter-spacing: 0.08em;
+    margin-top: 0.75rem;
 }
 
 .btn-start {
@@ -93,7 +115,7 @@
     border: none;
     border-radius: var(--radius);
     color: var(--bg);
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-weight: 700;
     font-size: 0.85rem;
     letter-spacing: 0.12em;
@@ -117,7 +139,7 @@
 body {
     background: var(--bg);
     color: var(--text);
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -300,7 +322,7 @@ main {
 }
 
 .prompt {
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: clamp(1.6rem, 4vw, 2.4rem);
     font-style: normal;
     text-align: center;
@@ -322,7 +344,7 @@ main {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     color: var(--text);
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: 1.2rem;
     padding: 0.85rem 1rem;
     cursor: pointer;
@@ -450,7 +472,7 @@ main {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     color: var(--muted);
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: 0.75rem;
     letter-spacing: 0.1em;
     padding: 0.6rem 1.4rem;
@@ -475,7 +497,7 @@ footer {
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: 0.65rem;
     letter-spacing: 0.04em;
     color: var(--muted);
@@ -513,20 +535,20 @@ footer a:hover {
 }
 
 .results-score {
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: clamp(3rem, 10vw, 5rem);
     font-weight: 700;
     color: var(--accent);
 }
 
 .results-pct {
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: 1.5rem;
     color: var(--muted);
 }
 
 .results-msg {
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: 1.1rem;
     color: var(--text);
 }
@@ -537,7 +559,7 @@ footer a:hover {
     border: none;
     border-radius: var(--radius);
     color: var(--bg);
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-weight: 700;
     font-size: 1rem;
     letter-spacing: 0.08em;
