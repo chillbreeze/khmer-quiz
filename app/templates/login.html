@@ -20,11 +20,11 @@
     </div>
   </header>
 
-  <main class="admin-main" style="display:flex;justify-content:center;align-items:flex-start;padding-top:4rem;">
-    <div class="admin-add" style="max-width:360px;width:100%;">
+  <main class="admin-main login-main">
+    <div class="admin-add login-box">
       <h2>Login</h2>
       {% if error %}
-      <p style="color:#c0392b;font-family:'Space Mono',monospace;font-size:0.85rem;margin-bottom:1rem;">{{ error }}</p>
+      <p class="login-error">{{ error }}</p>
       {% endif %}
       <form method="post" class="admin-form">
         <input type="text" name="username" placeholder="Username" autofocus required autocomplete="username" />

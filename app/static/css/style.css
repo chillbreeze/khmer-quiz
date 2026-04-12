@@ -340,6 +340,8 @@ footer {
 
 .footer-sep { color: var(--border); }
 
+footer svg { vertical-align: middle; }
+
 footer a {
   color: var(--muted);
   text-decoration: none;

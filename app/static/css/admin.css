@@ -1,5 +1,35 @@
 /* Admin-specific styles */
 
+.login-main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 4rem;
+}
+
+.login-box {
+  max-width: 360px;
+  width: 100%;
+}
+
+.login-error {
+  color: #c0392b;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.logout-link {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  margin-left: auto;
+  opacity: 0.6;
+  color: var(--text);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.logout-link:hover { opacity: 1; }
+
 .admin-body main {
   max-width: 1100px;
   width: 100%;
