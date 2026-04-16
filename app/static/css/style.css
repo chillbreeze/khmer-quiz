@@ -509,6 +509,12 @@ footer {
     color: var(--border);
 }
 
+.footer-contact {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 footer svg {
     vertical-align: middle;
 }
