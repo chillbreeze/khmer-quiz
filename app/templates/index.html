@@ -10,7 +10,7 @@
             href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Noto+Serif+Khmer:wght@300;400;600&family=Space+Mono:wght@400;700&display=swap"
             rel="stylesheet"
         />
-        <link rel="stylesheet" href="/static/css/style.css?v=2" />
+        <link rel="stylesheet" href="/static/css/style.css?v=3" />
     </head>
     <body>
         <div class="bg-texture"></div>
@@ -27,7 +27,18 @@
                     flashcards. 20 questions per session. English to Khmer
                     phonetics, Khmer phonetics to English, or mixed.
                 </p>
-                <button class="btn-start" id="btnStart">Start Quiz</button>
+                <div class="mode-buttons">
+                    <button class="btn-mode btn-zen" id="btnZen">
+                        <span class="mode-icon">☯</span>
+                        <span class="mode-name">Zen</span>
+                        <span class="mode-desc">Untimed · practise freely</span>
+                    </button>
+                    <button class="btn-mode btn-timed" id="btnTimed">
+                        <span class="mode-icon">⏱</span>
+                        <span class="mode-name">Timed</span>
+                        <span class="mode-desc">Beat your best time</span>
+                    </button>
+                </div>
             </div>
             <footer>
                 <div class="footer-contact">
@@ -103,8 +114,8 @@
                 <span id="scoreCorrect">0</span>
                 <span class="score-label">correct</span>
                 <div class="streak" id="streak"></div>
-                <span class="score-sep score-sep-timer">·</span>
-                <span id="timer" class="timer">0:00</span>
+                <span class="score-sep score-sep-timer hidden" id="timerSep">·</span>
+                <span id="timer" class="timer hidden">0:00</span>
             </div>
 
             <div class="card" id="card">
@@ -123,7 +134,7 @@
             <div class="results-score" id="results-score"></div>
             <div class="results-pct" id="results-pct"></div>
             <div class="results-msg" id="results-msg"></div>
-            <div class="results-times">
+            <div class="results-times hidden" id="results-times">
                 <div class="results-time-item">
                     <span class="results-time-label">Your time</span>
                     <span class="results-time-value" id="results-time"></span>
@@ -136,6 +147,6 @@
             <button class="btn-restart" id="btnRestart">Play Again</button>
         </div>
 
-        <script src="/static/js/quiz.js?v=2"></script>
+        <script src="/static/js/quiz.js?v=3"></script>
     </body>
 </html>

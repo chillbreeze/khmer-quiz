@@ -9,10 +9,11 @@ let state = {
   currentVocabId: null,
   currentDirection: null,
   answered: false,
+  mode: 'zen', // 'zen' | 'timed'
 };
 
-let timerInterval = null;
-let startTime     = null;
+let timerInterval  = null;
+let startTime      = null;
 let elapsedSeconds = 0;
 
 function formatTime(s) {
@@ -42,9 +43,9 @@ document.querySelectorAll('#dirToggle .tog').forEach(btn => {
 
 /* ── Start / restart quiz ──────────────────────────────────────── */
 function startQuiz() {
-  state.correct = 0;
-  state.total   = 0;
-  state.streak  = 0;
+  state.correct  = 0;
+  state.total    = 0;
+  state.streak   = 0;
   state.answered = false;
   scoreCorrect.textContent = 0;
   scoreTotal.textContent   = `0/${QUIZ_LENGTH}`;
@@ -52,14 +53,22 @@ function startQuiz() {
   $('results').classList.add('hidden');
   $('card').classList.remove('hidden');
 
-  if (timerInterval) clearInterval(timerInterval);
-  startTime = Date.now();
-  elapsedSeconds = 0;
-  $('timer').textContent = '0:00';
-  timerInterval = setInterval(() => {
-    elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
-    $('timer').textContent = formatTime(elapsedSeconds);
-  }, 1000);
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+
+  if (state.mode === 'timed') {
+    startTime      = Date.now();
+    elapsedSeconds = 0;
+    $('timer').textContent = '0:00';
+    $('timer').classList.remove('hidden');
+    $('timerSep').classList.remove('hidden');
+    timerInterval = setInterval(() => {
+      elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+      $('timer').textContent = formatTime(elapsedSeconds);
+    }, 1000);
+  } else {
+    $('timer').classList.add('hidden');
+    $('timerSep').classList.add('hidden');
+  }
 
   loadQuestion();
 }
@@ -109,11 +118,7 @@ function renderChoices(choices) {
 /* ── After answering: check if quiz is done ────────────────────── */
 function afterAnswer() {
   btnNext.classList.remove('hidden');
-  if (state.total >= QUIZ_LENGTH) {
-    btnNext.textContent = 'See Results →';
-  } else {
-    btnNext.textContent = 'Next →';
-  }
+  btnNext.textContent = state.total >= QUIZ_LENGTH ? 'See Results →' : 'Next →';
 }
 
 /* ── Handle choice click ───────────────────────────────────────── */
@@ -146,14 +151,10 @@ async function handleChoice(clickedBtn, chosen) {
   afterAnswer();
 }
 
-
 /* ── Next button ───────────────────────────────────────────────── */
 btnNext.addEventListener('click', () => {
-  if (state.total >= QUIZ_LENGTH) {
-    showResults();
-  } else {
-    loadQuestion();
-  }
+  if (state.total >= QUIZ_LENGTH) showResults();
+  else loadQuestion();
 });
 
 document.addEventListener('keydown', e => {
@@ -198,28 +199,33 @@ function showFeedback(correct, correctAnswer) {
 /* ── Results screen ────────────────────────────────────────────── */
 function showResults() {
   if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
-  elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
 
   $('card').classList.add('hidden');
   const pct = Math.round((state.correct / QUIZ_LENGTH) * 100);
   let message;
-  if (pct === 100) message = 'Perfect score!';
-  else if (pct >= 80) message = 'Great work!';
-  else if (pct >= 60) message = 'Good effort!';
-  else message = 'Keep practising!';
+  if (pct === 100)      message = 'Perfect score!';
+  else if (pct >= 80)   message = 'Great work!';
+  else if (pct >= 60)   message = 'Good effort!';
+  else                  message = 'Keep practising!';
 
   $('results-score').textContent = `${state.correct} / ${QUIZ_LENGTH}`;
   $('results-pct').textContent   = `${pct}%`;
   $('results-msg').textContent   = message;
 
-  const stored = localStorage.getItem('khmerQuizBestTime');
-  const isNewBest = !stored || elapsedSeconds < parseInt(stored, 10);
-  if (isNewBest) localStorage.setItem('khmerQuizBestTime', elapsedSeconds);
+  if (state.mode === 'timed') {
+    elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+    const stored    = localStorage.getItem('khmerQuizBestTime');
+    const isNewBest = !stored || elapsedSeconds < parseInt(stored, 10);
+    if (isNewBest) localStorage.setItem('khmerQuizBestTime', elapsedSeconds);
 
-  $('results-time').textContent = formatTime(elapsedSeconds);
-  $('results-best').textContent = isNewBest
-    ? `${formatTime(elapsedSeconds)} (new best!)`
-    : formatTime(parseInt(stored, 10));
+    $('results-time').textContent = formatTime(elapsedSeconds);
+    $('results-best').textContent = isNewBest
+      ? `${formatTime(elapsedSeconds)} (new best!)`
+      : formatTime(parseInt(stored, 10));
+    $('results-times').classList.remove('hidden');
+  } else {
+    $('results-times').classList.add('hidden');
+  }
 
   $('results').classList.remove('hidden');
 }
@@ -237,20 +243,24 @@ function resetUI() {
 
 /* ── Init ──────────────────────────────────────────────────────── */
 function showLanding() {
-  document.getElementById('landing').classList.remove('hidden');
+  $('landing').classList.remove('hidden');
   document.querySelector('header').classList.add('hidden');
   document.querySelector('main').classList.add('hidden');
   $('results').classList.add('hidden');
 }
 
-document.getElementById('logoHome').addEventListener('click', showLanding);
+$('logoHome').addEventListener('click', showLanding);
 
-document.getElementById('btnStart').addEventListener('click', () => {
-  document.getElementById('landing').classList.add('hidden');
+function launchQuiz(mode) {
+  state.mode = mode;
+  $('landing').classList.add('hidden');
   document.querySelector('header').classList.remove('hidden');
   document.querySelector('main').classList.remove('hidden');
   startQuiz();
-});
+}
+
+$('btnZen').addEventListener('click',   () => launchQuiz('zen'));
+$('btnTimed').addEventListener('click', () => launchQuiz('timed'));
 
 // Reset to landing on every page load, including bfcache restores
 window.addEventListener('pageshow', showLanding);

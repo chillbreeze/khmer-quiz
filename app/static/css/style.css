@@ -128,6 +128,68 @@
     opacity: 0.85;
 }
 
+.mode-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn-mode {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    color: var(--text);
+    font-family: var(--font-sans);
+    cursor: pointer;
+    padding: 1.4rem 2rem;
+    min-width: 140px;
+    transition: border-color 0.15s, background 0.15s;
+}
+
+.btn-mode:hover {
+    background: rgba(255,255,255,0.04);
+}
+
+.btn-zen:hover    { border-color: var(--accent2); }
+.btn-timed:hover  { border-color: var(--accent); }
+
+.mode-icon {
+    font-size: 1.6rem;
+    line-height: 1;
+}
+
+.mode-name {
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+}
+
+.btn-zen .mode-name    { color: var(--accent2); }
+.btn-timed .mode-name  { color: var(--accent); }
+
+.mode-desc {
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+}
+
+@media (max-width: 480px) {
+    .mode-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    .btn-mode {
+        flex-direction: row;
+        gap: 0.75rem;
+        padding: 1rem 1.25rem;
+        min-width: unset;
+    }
+    .mode-icon { font-size: 1.3rem; }
+}
+
 /* ── Reset ─────────────────────────────────────────────────────── */
 *,
 *::before,
