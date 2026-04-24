@@ -779,6 +779,18 @@ footer a:hover {
     }
     .score-bar {
         margin-bottom: 0.9rem;
+        font-size: 0.9rem;
+        gap: 0.4rem;
+    }
+    .score-label {
+        font-size: 0.75rem;
+    }
+    .streak {
+        font-size: 0.85rem;
+    }
+    .timer,
+    .timer-penalty {
+        font-size: 0.85rem;
     }
     main {
         padding: 0.9rem 0.75rem;
