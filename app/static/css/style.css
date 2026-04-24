@@ -144,8 +144,8 @@
     color: var(--text);
     font-family: var(--font-sans);
     cursor: pointer;
-    padding: 1.4rem 2rem;
-    min-width: 140px;
+    padding: 1.8rem 2rem;
+    flex: 1;
     transition: border-color 0.15s, background 0.15s;
 }
 
@@ -157,13 +157,15 @@
 .btn-timed:hover  { border-color: var(--accent); }
 
 .mode-icon {
-    font-size: 1.6rem;
+    font-size: 2.4rem;
     line-height: 1;
+    width: 2.6rem;
+    text-align: center;
 }
 
 .mode-name {
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 1.1rem;
     letter-spacing: 0.06em;
 }
 
@@ -171,9 +173,9 @@
 .btn-timed .mode-name  { color: var(--accent); }
 
 .mode-desc {
-    font-size: 0.65rem;
+    font-size: 0.8rem;
     color: var(--muted);
-    letter-spacing: 0.06em;
+    letter-spacing: 0.04em;
 }
 
 @media (max-width: 480px) {
