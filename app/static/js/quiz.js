@@ -128,8 +128,13 @@ function showPenalty() {
   const el = $('timerPenalty');
   el.textContent = `+${PENALTY_SECONDS}s`;
   el.classList.remove('pop');
-  void el.offsetWidth; // force reflow to restart animation
+  void el.offsetWidth;
   el.classList.add('pop');
+
+  $('timer').animate(
+    [{ color: '#e05c5c' }, { color: '#7a8078' }],
+    { duration: 3400, easing: 'ease-out' }
+  );
 }
 
 /* ── Handle choice click ───────────────────────────────────────── */
