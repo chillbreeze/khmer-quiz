@@ -296,6 +296,17 @@ main {
     letter-spacing: 0.05em;
 }
 
+.timer {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+}
+
+.score-sep-timer {
+    color: var(--border);
+}
+
 /* ── Card ──────────────────────────────────────────────────────── */
 .card {
     width: 100%;
@@ -558,6 +569,41 @@ footer a:hover {
     font-family: var(--font-sans);
     font-size: 1.1rem;
     color: var(--text);
+}
+
+.results-times {
+    display: flex;
+    gap: 2rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.9rem 1.5rem;
+    background: var(--surface);
+}
+
+.results-time-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.results-time-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+}
+
+.results-time-value {
+    font-family: var(--font-mono);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.results-best-value {
+    color: var(--accent);
 }
 
 .btn-restart {

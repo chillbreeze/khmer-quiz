@@ -11,6 +11,14 @@ let state = {
   answered: false,
 };
 
+let timerInterval = null;
+let startTime     = null;
+let elapsedSeconds = 0;
+
+function formatTime(s) {
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+}
+
 /* ── DOM refs ──────────────────────────────────────────────────── */
 const $ = id => document.getElementById(id);
 const prompt       = $('prompt');
@@ -43,6 +51,16 @@ function startQuiz() {
   streakEl.textContent     = '';
   $('results').classList.add('hidden');
   $('card').classList.remove('hidden');
+
+  if (timerInterval) clearInterval(timerInterval);
+  startTime = Date.now();
+  elapsedSeconds = 0;
+  $('timer').textContent = '0:00';
+  timerInterval = setInterval(() => {
+    elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+    $('timer').textContent = formatTime(elapsedSeconds);
+  }, 1000);
+
   loadQuestion();
 }
 
@@ -179,6 +197,9 @@ function showFeedback(correct, correctAnswer) {
 
 /* ── Results screen ────────────────────────────────────────────── */
 function showResults() {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+
   $('card').classList.add('hidden');
   const pct = Math.round((state.correct / QUIZ_LENGTH) * 100);
   let message;
@@ -190,6 +211,16 @@ function showResults() {
   $('results-score').textContent = `${state.correct} / ${QUIZ_LENGTH}`;
   $('results-pct').textContent   = `${pct}%`;
   $('results-msg').textContent   = message;
+
+  const stored = localStorage.getItem('khmerQuizBestTime');
+  const isNewBest = !stored || elapsedSeconds < parseInt(stored, 10);
+  if (isNewBest) localStorage.setItem('khmerQuizBestTime', elapsedSeconds);
+
+  $('results-time').textContent = formatTime(elapsedSeconds);
+  $('results-best').textContent = isNewBest
+    ? `${formatTime(elapsedSeconds)} (new best!)`
+    : formatTime(parseInt(stored, 10));
+
   $('results').classList.remove('hidden');
 }
 
