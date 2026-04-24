@@ -10,7 +10,7 @@
             href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Noto+Serif+Khmer:wght@300;400;600&family=Space+Mono:wght@400;700&display=swap"
             rel="stylesheet"
         />
-        <link rel="stylesheet" href="/static/css/style.css?v=5" />
+        <link rel="stylesheet" href="/static/css/style.css?v=6" />
     </head>
     <body>
         <div class="bg-texture"></div>
@@ -31,7 +31,9 @@
                     <button class="btn-mode btn-zen" id="btnZen">
                         <span class="mode-icon">☯</span>
                         <span class="mode-name">Zen</span>
-                        <span class="mode-desc">Untimed · practise freely</span>
+                        <span class="mode-desc"
+                            >Untimed · just chill and practice
+                        </span>
                     </button>
                     <button class="btn-mode btn-timed" id="btnTimed">
                         <span class="mode-icon">⏱</span>
@@ -114,7 +116,9 @@
                 <span id="scoreCorrect">0</span>
                 <span class="score-label">correct</span>
                 <div class="streak" id="streak"></div>
-                <span class="score-sep score-sep-timer hidden" id="timerSep">·</span>
+                <span class="score-sep score-sep-timer hidden" id="timerSep"
+                    >·</span
+                >
                 <span id="timer" class="timer hidden">0:00</span>
             </div>
 
@@ -141,7 +145,10 @@
                 </div>
                 <div class="results-time-item">
                     <span class="results-time-label">Best time</span>
-                    <span class="results-time-value results-best-value" id="results-best"></span>
+                    <span
+                        class="results-time-value results-best-value"
+                        id="results-best"
+                    ></span>
                 </div>
             </div>
             <button class="btn-restart" id="btnRestart">Play Again</button>

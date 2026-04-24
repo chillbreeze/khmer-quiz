@@ -180,16 +180,13 @@
 
 @media (max-width: 480px) {
     .mode-buttons {
-        flex-direction: column;
         width: 100%;
     }
     .btn-mode {
-        flex-direction: row;
-        gap: 0.75rem;
-        padding: 1rem 1.25rem;
-        min-width: unset;
+        padding: 1.2rem 1rem;
     }
-    .mode-icon { font-size: 1.3rem; }
+    .mode-icon { font-size: 1.8rem; }
+    .mode-desc { font-size: 0.7rem; }
 }
 
 /* ── Reset ─────────────────────────────────────────────────────── */
