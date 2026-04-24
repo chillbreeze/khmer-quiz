@@ -10,7 +10,7 @@
             href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Noto+Serif+Khmer:wght@300;400;600&family=Space+Mono:wght@400;700&display=swap"
             rel="stylesheet"
         />
-        <link rel="stylesheet" href="/static/css/style.css?v=12" />
+        <link rel="stylesheet" href="/static/css/style.css?v=13" />
     </head>
     <body>
         <div class="bg-texture"></div>
@@ -31,14 +31,14 @@
                     <button class="btn-mode btn-zen" id="btnZen">
                         <span class="mode-icon">☯</span>
                         <span class="mode-name">Zen</span>
-                        <span class="mode-desc"
-                            >Untimed · just chill and practice
-                        </span>
+                        <span class="mode-desc">Untimed</span>
+                        <span class="mode-desc">Just practice and chill</span>
                     </button>
                     <button class="btn-mode btn-timed" id="btnTimed">
                         <span class="mode-icon">⏱</span>
                         <span class="mode-name">Timed</span>
                         <span class="mode-desc">Beat your best time</span>
+                        <span class="mode-desc">+5s penalty for mistakes </span>
                     </button>
                 </div>
             </div>
@@ -143,7 +143,10 @@
                 <div class="results-times hidden" id="results-times">
                     <div class="results-time-item">
                         <span class="results-time-label">Your time</span>
-                        <span class="results-time-value" id="results-time"></span>
+                        <span
+                            class="results-time-value"
+                            id="results-time"
+                        ></span>
                     </div>
                     <div class="results-time-item">
                         <span class="results-time-label">Best time</span>
@@ -151,12 +154,17 @@
                             class="results-time-value results-best-value"
                             id="results-best"
                         ></span>
+                        <span
+                            class="results-new-best hidden"
+                            id="results-new-best"
+                            >New best!</span
+                        >
                     </div>
                 </div>
                 <button class="btn-restart" id="btnRestart">Play Again</button>
             </div>
         </div>
 
-        <script src="/static/js/quiz.js?v=10"></script>
+        <script src="/static/js/quiz.js?v=11"></script>
     </body>
 </html>

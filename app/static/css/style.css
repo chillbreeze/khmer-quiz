@@ -712,6 +712,15 @@ footer a:hover {
     color: var(--accent);
 }
 
+.results-new-best {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--correct);
+    text-align: center;
+    letter-spacing: 0.05em;
+}
+
 .btn-restart {
     margin-top: 1rem;
     background: var(--accent);

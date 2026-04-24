@@ -238,9 +238,9 @@ function showResults() {
     if (isNewBest) localStorage.setItem('khmerQuizBestTime', elapsedSeconds);
 
     $('results-time').textContent = formatTime(elapsedSeconds);
-    $('results-best').textContent = isNewBest
-      ? `${formatTime(elapsedSeconds)} (new best!)`
-      : formatTime(parseInt(stored, 10));
+    $('results-best').textContent = formatTime(isNewBest ? elapsedSeconds : parseInt(stored, 10));
+    if (isNewBest) $('results-new-best').classList.remove('hidden');
+    else           $('results-new-best').classList.add('hidden');
     $('results-times').classList.remove('hidden');
   } else {
     $('results-times').classList.add('hidden');
