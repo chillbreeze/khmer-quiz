@@ -99,7 +99,7 @@
 }
 
 .landing-features li::before {
-    content: '— ';
+    content: "— ";
     color: var(--accent);
 }
 
@@ -146,15 +146,21 @@
     cursor: pointer;
     padding: 1.8rem 2rem;
     flex: 1;
-    transition: border-color 0.15s, background 0.15s;
+    transition:
+        border-color 0.15s,
+        background 0.15s;
 }
 
 .btn-mode:hover {
-    background: rgba(255,255,255,0.04);
+    background: rgba(255, 255, 255, 0.04);
 }
 
-.btn-zen:hover    { border-color: var(--accent2); }
-.btn-timed:hover  { border-color: var(--accent); }
+.btn-zen:hover {
+    border-color: var(--accent2);
+}
+.btn-timed:hover {
+    border-color: var(--accent);
+}
 
 .mode-icon {
     font-size: 2.4rem;
@@ -169,8 +175,12 @@
     letter-spacing: 0.06em;
 }
 
-.btn-zen .mode-name    { color: var(--accent2); }
-.btn-timed .mode-name  { color: var(--accent); }
+.btn-zen .mode-name {
+    color: var(--accent2);
+}
+.btn-timed .mode-name {
+    color: var(--accent);
+}
 
 .mode-desc {
     font-size: 0.8rem;
@@ -185,8 +195,12 @@
     .btn-mode {
         padding: 1.2rem 1rem;
     }
-    .mode-icon { font-size: 1.8rem; }
-    .mode-desc { font-size: 0.7rem; }
+    .mode-icon {
+        font-size: 1.8rem;
+    }
+    .mode-desc {
+        font-size: 0.7rem;
+    }
 }
 
 /* ── Reset ─────────────────────────────────────────────────────── */
@@ -373,9 +387,25 @@ main {
     pointer-events: none;
 }
 
+.love {
+    font-size: 0.75rem;
+    color: var(--color-muted, #666);
+    line-height: 1.6;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    font-weight: 400;
+    margin-bottom: 1rem;
+}
+
 @keyframes penaltyFade {
-    0%,  20% { opacity: 1; }
-    100%     { opacity: 0; }
+    0%,
+    20% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
 .timer-penalty.pop {
@@ -383,8 +413,14 @@ main {
 }
 
 @keyframes timerFlash {
-    0%, 100% { color: #7a8078; }
-    20%, 60% { color: #e05c5c; }
+    0%,
+    100% {
+        color: #7a8078;
+    }
+    20%,
+    60% {
+        color: #e05c5c;
+    }
 }
 
 .timer.flash {
@@ -594,15 +630,16 @@ footer {
     position: relative;
     z-index: 1;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 0;
     font-family: var(--font-sans);
     font-size: 0.65rem;
     letter-spacing: 0.04em;
     color: var(--muted);
     border-top: 1px solid var(--border);
-  }
+}
 
 .footer-sep {
     color: var(--border);
