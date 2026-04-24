@@ -121,6 +121,17 @@ function afterAnswer() {
   btnNext.textContent = state.total >= QUIZ_LENGTH ? 'See Results →' : 'Next →';
 }
 
+/* ── Penalty animation ─────────────────────────────────────────── */
+const PENALTY_SECONDS = 5;
+
+function showPenalty() {
+  const el = $('timerPenalty');
+  el.textContent = `+${PENALTY_SECONDS}s`;
+  el.classList.remove('pop');
+  void el.offsetWidth; // force reflow to restart animation
+  el.classList.add('pop');
+}
+
 /* ── Handle choice click ───────────────────────────────────────── */
 async function handleChoice(clickedBtn, chosen) {
   if (state.answered) return;
@@ -146,6 +157,10 @@ async function handleChoice(clickedBtn, chosen) {
     });
     showFeedback(false, data.answer);
     bumpScore(false);
+    if (state.mode === 'timed') {
+      startTime -= PENALTY_SECONDS * 1000;
+      showPenalty();
+    }
   }
 
   afterAnswer();

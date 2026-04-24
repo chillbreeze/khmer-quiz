@@ -364,6 +364,24 @@ main {
     letter-spacing: 0.08em;
 }
 
+.timer-penalty {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--wrong);
+    opacity: 0;
+    pointer-events: none;
+}
+
+@keyframes penaltyFloat {
+    0%   { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-18px); }
+}
+
+.timer-penalty.pop {
+    animation: penaltyFloat 0.85s ease-out forwards;
+}
+
 .score-sep-timer {
     color: var(--border);
 }
