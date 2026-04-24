@@ -225,7 +225,7 @@ function showResults() {
   if (pct === 100)      message = 'Perfect score!';
   else if (pct >= 80)   message = 'Great work!';
   else if (pct >= 60)   message = 'Good effort!';
-  else                  message = 'Keep practising!';
+  else                  message = 'Keep practicing!';
 
   $('results-score').textContent = `${state.correct} / ${QUIZ_LENGTH}`;
   $('results-pct').textContent   = `${pct}%`;

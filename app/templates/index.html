@@ -10,7 +10,7 @@
             href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Noto+Serif+Khmer:wght@300;400;600&family=Space+Mono:wght@400;700&display=swap"
             rel="stylesheet"
         />
-        <link rel="stylesheet" href="/static/css/style.css?v=11" />
+        <link rel="stylesheet" href="/static/css/style.css?v=12" />
     </head>
     <body>
         <div class="bg-texture"></div>
@@ -135,26 +135,28 @@
             </div>
         </main>
 
-        <div class="results hidden" id="results">
-            <div class="results-score" id="results-score"></div>
-            <div class="results-pct" id="results-pct"></div>
-            <div class="results-msg" id="results-msg"></div>
-            <div class="results-times hidden" id="results-times">
-                <div class="results-time-item">
-                    <span class="results-time-label">Your time</span>
-                    <span class="results-time-value" id="results-time"></span>
+        <div class="modal-backdrop hidden" id="results">
+            <div class="modal">
+                <div class="results-score" id="results-score"></div>
+                <div class="results-pct" id="results-pct"></div>
+                <div class="results-msg" id="results-msg"></div>
+                <div class="results-times hidden" id="results-times">
+                    <div class="results-time-item">
+                        <span class="results-time-label">Your time</span>
+                        <span class="results-time-value" id="results-time"></span>
+                    </div>
+                    <div class="results-time-item">
+                        <span class="results-time-label">Best time</span>
+                        <span
+                            class="results-time-value results-best-value"
+                            id="results-best"
+                        ></span>
+                    </div>
                 </div>
-                <div class="results-time-item">
-                    <span class="results-time-label">Best time</span>
-                    <span
-                        class="results-time-value results-best-value"
-                        id="results-best"
-                    ></span>
-                </div>
+                <button class="btn-restart" id="btnRestart">Play Again</button>
             </div>
-            <button class="btn-restart" id="btnRestart">Play Again</button>
         </div>
 
-        <script src="/static/js/quiz.js?v=9"></script>
+        <script src="/static/js/quiz.js?v=10"></script>
     </body>
 </html>
