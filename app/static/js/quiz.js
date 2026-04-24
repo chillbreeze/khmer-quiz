@@ -131,10 +131,9 @@ function showPenalty() {
   void el.offsetWidth;
   el.classList.add('pop');
 
-  $('timer').animate(
-    [{ color: '#e05c5c' }, { color: '#7a8078' }],
-    { duration: 3400, easing: 'ease-out' }
-  );
+  const timerEl = $('timer');
+  timerEl.style.color = '#e05c5c';
+  setTimeout(() => { timerEl.style.color = ''; }, 1400);
 }
 
 /* ── Handle choice click ───────────────────────────────────────── */
