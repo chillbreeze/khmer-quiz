@@ -4,7 +4,7 @@ A personal web app I built to help me study Khmer (Cambodian) vocabulary.
 
 **Live:** [learn.khmer.cloud](https://learn.khmer.cloud)
 
-![Website screenshot](screenshots/khmer-website-screenshot-00.png)
+![Website screenshot](screenshots/khmer-website-screenshot-01.png)
 
 ## Why I Built It
 
